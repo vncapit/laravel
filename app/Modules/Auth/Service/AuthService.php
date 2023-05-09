@@ -16,10 +16,12 @@ use Illuminate\Support\Facades\Hash;
 class AuthService
 {
     private $userRepository;
+
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }
+
 
     public function login($request)
     {
@@ -31,7 +33,7 @@ class AuthService
             return AuthErrorCode::USERNAME_OR_PASSWORD_INCORRECT;
         }
 
-        if(Hash::check($password, $user->password)) {
+        if (Hash::check($password, $user->password)) {
             return $user->createToken('auth')->plainTextToken;
         }
         return AuthErrorCode::USERNAME_OR_PASSWORD_INCORRECT;
@@ -39,6 +41,6 @@ class AuthService
 
     public function logout()
     {
-        return \auth()->guard('api')->user()->currentAccessToken()->delete();
+        return api_user()->currentAccessToken()->delete();
     }
 }

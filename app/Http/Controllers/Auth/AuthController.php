@@ -25,19 +25,12 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        try {
-            $this->validate($request, [
-                'username' => 'required|string',
-                'password' => 'required|string'
-            ]);
-        }
-        catch (ValidationException $e){
-            $error = json_encode($e->errors());
-            return $this->failed(422, $error);
-        }
+        $this->validate($request, [
+            'username' => 'required|string',
+            'password' => 'required|string'
+        ]);
 
         $data = $this->authService->login($request);
-
         if ($data !== AuthErrorCode::USERNAME_OR_PASSWORD_INCORRECT) {
             return $this->success($data);
         }
@@ -45,7 +38,9 @@ class AuthController extends Controller
         return $this->failed($data, AuthErrorCode::getText($data));
     }
 
-    public function logout() {
-        return $this->authService->logout();
+    public function logout()
+    {
+        $res = $this->authService->logout();
+        return $this->success($res);
     }
 }

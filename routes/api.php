@@ -24,7 +24,7 @@ Route::prefix('v1')->group(function() {
     Route::post('auth/login', [AuthController::class, 'login'])->name('auth.login');
 });
 
-Route::prefix('v1')->middleware(['auth:api'])->group(function() {
+Route::prefix('v1')->middleware(['auth:sanctum'])->group(function() {
     Route::post('user/create', [UserController::class, 'createUser']);
     Route::post('auth/logout', [AuthController::class, 'logout']);
 });

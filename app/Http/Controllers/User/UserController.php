@@ -12,6 +12,7 @@ use Illuminate\Support\Arr;
 class UserController extends Controller
 {
     private $userService;
+
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
@@ -27,29 +28,23 @@ class UserController extends Controller
      */
     public function createUser(Request $request)
     {
-        try {
-            $this->validate($request, [
-                'username' => 'required|string|min:4|max:15',
-                'password' => 'required|string|min:6|max:20',
-                'email' => 'nullable|email',
-                'name' => 'required|string',
-            ]);
-        }
-        catch (\Illuminate\Validation\ValidationException $e) {
-            $error = json_encode($e->errors());
-            return $this->failed($e->status, $error);
-        }
+        $this->validate($request, [
+            'username' => 'required|string|min:4|max:15',
+            'password' => 'required|string|min:6|max:20',
+            'email' => 'nullable|email',
+            'name' => 'required|string',
+        ]);
 
         $user = new User();
         $user->username = $request->username;
         $user->password = bcrypt($request->password);
         $user->email = $request->email;
         $user->name = $request->name;
-        $data = $this->userService->createUser($user) ;
-        if($data !== UserErrorCode::USERNAME_EXISTED) {
-            return $this->success($data) ;
+        $data = $this->userService->createUser($user);
+        if ($data !== UserErrorCode::USERNAME_EXISTED) {
+            return $this->success($data);
         }
-        return  $this->failed($data, UserErrorCode::getText($data));
+        return $this->failed($data, UserErrorCode::getText($data));
     }
 
 
