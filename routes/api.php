@@ -27,4 +27,11 @@ Route::prefix('v1')->group(function() {
 Route::prefix('v1')->middleware(['auth:sanctum'])->group(function() {
     Route::post('user/create', [UserController::class, 'createUser']);
     Route::post('auth/logout', [AuthController::class, 'logout']);
+
+    Route::post('book/create', [\App\Http\Controllers\Book\BookController::class, 'createBook']);
+    Route::post('book/delete', [\App\Http\Controllers\Book\BookController::class, 'deleteBook']);
+
+    Route::post('category/create', [\App\Http\Controllers\Category\CategoryController::class, 'createCategory']);
+    Route::post('category/delete', [\App\Http\Controllers\Category\CategoryController::class, 'deleteCategory']);
+
 });
