@@ -32,8 +32,14 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function() {
     Route::post('book/delete', [\App\Http\Controllers\Book\BookController::class, 'deleteBook']);
     Route::post('book/add-category', [\App\Http\Controllers\Book\BookController::class, 'addBookToCategory']);
     Route::post('book/remove-category', [\App\Http\Controllers\Book\BookController::class, 'removeBookFromCategory']);
+    Route::post('book/add-comment', [\App\Http\Controllers\Book\BookController::class, 'addComment']);
+    Route::get('book/get-comments', [\App\Http\Controllers\Book\BookController::class, 'getAllComments']);
+
 
     Route::post('category/create', [\App\Http\Controllers\Category\CategoryController::class, 'createCategory']);
     Route::post('category/delete', [\App\Http\Controllers\Category\CategoryController::class, 'deleteCategory']);
+
+    Route::post('file/upload', [\App\Http\Controllers\File\FileController::class, 'upload']);
+    Route::get('file/download', [\App\Http\Controllers\File\FileController::class, 'download']);
 
 });

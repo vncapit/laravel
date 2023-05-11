@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Book;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Modules\Book\Service\BookService;
 use App\Modules\Book\ErrorCode\BookErrorCode;
 use Illuminate\Http\Request;
@@ -65,5 +66,29 @@ class BookController extends Controller
 
         $category = Category::find($request->category_id);
         return $category->books()->detach($request->book_id);
+    }
+
+    public function addComment(Request $request)
+    {
+        $this->validate($request, [
+            'book_id' => 'required|int|exists:books,id',
+            'comment' => 'required|string'
+        ]);
+
+        $book = Book::find($request->book_id);
+        $comment = new Comment();
+        $comment->content = $request->comment;
+        $comment->user_id = api_user_model()->id;
+        return $book->comments()->save($comment);
+    }
+
+    public function getAllComments(Request $request)
+    {
+        $this->validate($request, [
+            'book_id' => 'required|int|exists:books,id',
+        ]);
+
+        $book = Book::find($request->book_id);
+        return $book->comments()->get();
     }
 }

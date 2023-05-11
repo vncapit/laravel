@@ -31,4 +31,9 @@ class Category extends Model
     {
         return $this->belongsToMany(Book::class, 'book_category', 'category_id', 'book_id')->withTimestamps();
     }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
 }
