@@ -30,6 +30,8 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function() {
 
     Route::post('book/create', [\App\Http\Controllers\Book\BookController::class, 'createBook']);
     Route::post('book/delete', [\App\Http\Controllers\Book\BookController::class, 'deleteBook']);
+    Route::post('book/add-category', [\App\Http\Controllers\Book\BookController::class, 'addBookToCategory']);
+    Route::post('book/remove-category', [\App\Http\Controllers\Book\BookController::class, 'removeBookFromCategory']);
 
     Route::post('category/create', [\App\Http\Controllers\Category\CategoryController::class, 'createCategory']);
     Route::post('category/delete', [\App\Http\Controllers\Category\CategoryController::class, 'deleteCategory']);

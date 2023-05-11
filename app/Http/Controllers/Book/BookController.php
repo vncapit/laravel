@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Book;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
+use App\Models\Category;
 use App\Modules\Book\Service\BookService;
 use App\Modules\Book\ErrorCode\BookErrorCode;
 use Illuminate\Http\Request;
@@ -42,5 +43,27 @@ class BookController extends Controller
         ]);
 
         return $this->bookService->deleteBook($request->id);
+    }
+
+    public function addBookToCategory(Request $request)
+    {
+        $this->validate($request, [
+            'book_id' => 'required|int|exists:books,id',
+            'category_id' => 'required|int|exists:categories,id'
+        ]);
+
+        $book = Book::find($request->book_id);
+        $book->categories()->syncWithoutDetaching($request->category_id);
+    }
+
+    public function removeBookFromCategory(Request $request)
+    {
+        $this->validate($request, [
+            'book_id' => 'required|int|exists:books,id',
+            'category_id' => 'required|int|exists:categories,id'
+        ]);
+
+        $category = Category::find($request->category_id);
+        return $category->books()->detach($request->book_id);
     }
 }
