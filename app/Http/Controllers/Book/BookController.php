@@ -9,6 +9,7 @@ use App\Models\Comment;
 use App\Modules\Book\Service\BookService;
 use App\Modules\Book\ErrorCode\BookErrorCode;
 use Illuminate\Http\Request;
+use App\Jobs\TestLog;
 
 class BookController extends Controller
 {
@@ -89,6 +90,10 @@ class BookController extends Controller
         ]);
 
         $book = Book::find($request->book_id);
-        return $book->comments()->get();
+        $comments = $book->comments()->get();
+
+        // write comment to log:
+        TestLog::dispatch($comments);
+        return $comments;
     }
 }
