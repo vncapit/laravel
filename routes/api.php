@@ -42,4 +42,6 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function() {
     Route::post('file/upload', [\App\Http\Controllers\File\FileController::class, 'upload']);
     Route::get('file/download', [\App\Http\Controllers\File\FileController::class, 'download']);
 
+    Route::post('command/update-code', [\App\Http\Controllers\Command\CommandController::class, 'updateCode']);
+
 });
