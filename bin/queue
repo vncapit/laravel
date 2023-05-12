@@ -1,0 +1,3 @@
+#!/bin/bash
+php /www/wwwroot/caplaravel.com/artisan queue:work
+git
