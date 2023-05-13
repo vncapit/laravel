@@ -43,4 +43,5 @@ class AuthController extends Controller
         $res = $this->authService->logout();
         return $this->success($res);
     }
+
 }

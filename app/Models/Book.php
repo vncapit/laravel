@@ -38,7 +38,7 @@ class Book extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'book_category', 'category_id', 'book_id')->withTimestamps();
+        return $this->belongsToMany(Category::class, 'book_category', 'book_id', 'category_id')->withTimestamps();
     }
 
     public function comments()

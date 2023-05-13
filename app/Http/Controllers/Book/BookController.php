@@ -96,4 +96,27 @@ class BookController extends Controller
         TestLog::dispatch($comments);
         return $comments;
     }
+
+    public function findBooks(Request $request)
+    {
+        $this->validate($request, [
+            'book_id' => 'nullable|int|exists:books,id',
+            'title' => 'nullable|string',
+            'author_id' => 'nullable|int|exists:users,id',
+            'year_published' => 'nullable|int',
+            'category_id' => 'nullable|int|exists:categories,id',
+            'category' => 'nullable|string',
+            'comment' => 'nullable|string'
+        ]);
+
+        $book_id = $request->book_id;
+        $title = $request->title;
+        $author_id = $request->author_id;
+        $year_published = $request->year_published;
+        $category_id = $request->category_id;
+        $category = $request->category;
+        $comment = $request->comment;
+
+        return $this->bookService->findBooks($book_id, $title, $author_id, $year_published, $category_id, $category, $comment);
+    }
 }
