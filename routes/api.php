@@ -48,7 +48,14 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function() {
     Route::get('permission/get-all-route', [\App\Http\Controllers\Permission\PermissionController::class, 'getAllRoute'])->name('permission.getAllRoute');
     Route::post('permission/disable-routes', [\App\Http\Controllers\Permission\PermissionController::class, 'disableRoutes'])->name('permission.disableRoutes');
     Route::post('permission/enable-routes', [\App\Http\Controllers\Permission\PermissionController::class, 'enableRoutes'])->name('permission.enableRoutes');
+
+    Route::post('permission/create-permission', [\App\Http\Controllers\Permission\PermissionController::class, 'createPermission'])->name('permission.createPermission');
+    Route::post('permission/bind-routes', [\App\Http\Controllers\Permission\PermissionController::class, 'permissionBindRoutes'])->name('permission.permissionBindRoute');
+
     Route::get('permission/get-role-info', [\App\Http\Controllers\Permission\PermissionController::class, 'getRoleInfo'])->name('permission.getRoleInfo');
+    Route::post('permission/create-role', [\App\Http\Controllers\Permission\PermissionController::class, 'createRole'])->name('permission.createRole');
+    Route::post('permission/give-permission-role', [\App\Http\Controllers\Permission\PermissionController::class, 'givePermissionToRole'])->name('permission.givePermissionToRole');
+    Route::post('permission/assign-role', [\App\Http\Controllers\Permission\PermissionController::class, 'assignRole'])->name('permission.assignRole');
 
 
 });
